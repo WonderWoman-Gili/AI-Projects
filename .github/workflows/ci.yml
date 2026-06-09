@@ -37,3 +37,14 @@ jobs:
       - name: Build Docker image
         run: |
           docker build -t ai-lab .
+          
+                - name: Run API container
+        run: |
+          docker run -d -p 8000:8000 --name ai-lab-test ai-lab
+
+      - name: Wait for startup
+        run: sleep 15
+
+      - name: Health check
+        run: |
+          curl http://localhost:8000/health
